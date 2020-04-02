@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import pdf from '../../public/pdf/build/pdf'
+    import pdf from '../../public/pdfjs-dist/build/pdf'
     //v3.0 在public 目录下存放pdf js的相关文件;v2.0 在static目录下存放pdf相关文件
     export default {
         name: "PdfPreview",
@@ -71,7 +71,11 @@
                 this.isLoading=true
                 this.$refs.pdfCanvas.scrollTop =0
                 let pdfjsLib = pdf
-                let loadingTask = pdfjsLib.getDocument(url)
+                let loadingTask = pdfjsLib.getDocument({
+                    url:url,
+                    cMapUrl:"/pdfjs-dist/web/cmaps/",
+                    cMapPacked:true
+                })
                 loadingTask.promise.then((pdf) =>{
                     let numPages = pdf.numPages
                     let container = document.getElementById('pdfCanvas')

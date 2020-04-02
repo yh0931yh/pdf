@@ -2,11 +2,11 @@
     <el-dialog
             title="iframe预览pdf"
             :visible.sync="iframeDialogVisible"
-            width="60%"
+            width="80%"
             :before-close="iframeHandleClose"
             center
     >
-        <iframe v-if="iframeDialogVisible" id='previewPdf' :src="'/pdf/web/viewer.html?file=' + pdfFileUrl" height="560"
+        <iframe v-if="iframeDialogVisible" id='previewPdf' :src="'/pdfjs-dist/web/viewer.html?file=' + pdfFileUrl" height="560"
                 width="100%">
         </iframe>
     </el-dialog>

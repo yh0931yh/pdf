@@ -78,9 +78,8 @@ export default {
     openLocalUrl(){
       // 此种方式和iframe方式都不接受文件流形式,文件流形式需要对url编码处理 encodeURIComponent(url)
       //编码后还是不识别 url后面加上 &.pdf 试试
-
       let url='demo.pdf'  //web路径下有demo文件
-      window.open('/pdf/web/viewer.html?file=' + url)
+      window.open('/pdfjs-dist/web/viewer.html?file=' + url)
     },
     openOutUrl(){
       this.isIframeShow=true
