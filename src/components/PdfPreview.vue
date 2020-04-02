@@ -43,7 +43,7 @@
                 let _this = this
                 pdf.getPage(pageNumber).then((page) => {
                     let scale = (container.offsetWidth/page.view[2])
-                    let viewport = page.getViewport(scale)
+                    let viewport = page.getViewport({scale})
                     let canvas = document.createElement("canvas")
                     canvas.width= viewport.width
                     canvas.height= viewport.height
@@ -55,7 +55,7 @@
                         viewport: viewport,
                         intent: 'print'
                     };
-                    page.render(renderContext).then(() => {
+                    page.render(renderContext).promise.then(() => {
                         pageNumber +=1
                         if(pageNumber<=numPages) {
                             _this._renderPage(pdf,pageNumber,container,numPages)
@@ -71,17 +71,18 @@
                 this.isLoading=true
                 this.$refs.pdfCanvas.scrollTop =0
                 let pdfjsLib = pdf
+                pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdfjs-dist/build/pdf.worker.js'
                 let loadingTask = pdfjsLib.getDocument({
                     url:url,
                     cMapUrl:"/pdfjs-dist/web/cmaps/",
                     cMapPacked:true
                 })
-                loadingTask.promise.then((pdf) =>{
+              loadingTask.promise.then((pdf) =>{
                     let numPages = pdf.numPages
                     let container = document.getElementById('pdfCanvas')
                     let pageNumber = 1
                     this._renderPage(pdf,pageNumber,container,numPages)
-                }, err => {alert(err)});
+               }, err => {alert(err)});
             },
 
         }
